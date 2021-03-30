@@ -25,6 +25,9 @@
                 <p>
                     {{ $post->description }}
                 </p>
+                <p>{{ $post->favorites->count() }}
+                    user  {{ Str::plural('favorite', $post->favorites->count()) }} this.
+                </p>
                 <p class="text-muted"> Posted on {{ $post->created_at->diffForHumans() }}</p>
                 <p> Posted by <strong>{{ $post->user->name }}</strong></p>
                 <p>

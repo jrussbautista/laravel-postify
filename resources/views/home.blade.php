@@ -16,9 +16,11 @@
                             <div class="card-body">
                                 <a href="{{ route('posts.show', $post->id)  }}">
                                     <div class="card-title">{{ $post->title }}</div>
+                                    <p>{{ $post->favorites->count() }}
+                                        user  {{ Str::plural('favorite', $post->favorites->count()) }} this.
+                                    </p>
                                     <p class="text-muted"> Posted on {{ $post->created_at->diffForHumans() }}</p>
                                 </a>
-
 
                                 <p> Posted by <strong>{{ $post->user->name }}</strong></p>
                                 @auth
