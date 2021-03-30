@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     public function index() {
-        $posts = Post::all();
+        $posts = Post::latest()->with(['favorites',  'user'])->orderBy('created_at', 'desc')->paginate(10);
         return  view('posts.index', ['posts' => $posts ]);
     }
 

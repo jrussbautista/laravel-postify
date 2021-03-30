@@ -25,29 +25,33 @@
                 <p>
                     {{ $post->description }}
                 </p>
-                <p> Posted on {{ $post->created_at->diffForHumans() }}</p>
+                <p class="text-muted"> Posted on {{ $post->created_at->diffForHumans() }}</p>
+                <p> Posted by <strong>{{ $post->user->name }}</strong></p>
                 <p>
                    Category: {{ $post->category->name }}
                 </p>
                 <div class="d-flex align-items-center">
-                    <div class="me-3">
-                        @if($post->favoritedBy(auth()->user()))
-                            <form method="POST" action="{{ route('posts.favorites.destroy', $post->id) }}">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit">
-                                    <i class="bi bi-heart-fill"></i>
-                                </button>
-                            </form>
-                        @else
-                            <form method="POST" action="{{ route('posts.favorites.store', $post->id) }}">
-                                @csrf
-                                <button type="submit">
-                                    <i class="bi bi-heart"></i>
-                                </button>
-                            </form>
-                        @endif
-                    </div>
+                    @auth
+                        <div class="me-3">
+                            @if($post->favoritedBy(auth()->user()))
+                                <form method="POST" action="{{ route('posts.favorites.destroy', $post->id) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit">
+                                        <i class="bi bi-heart-fill"></i>
+                                    </button>
+                                </form>
+                            @else
+                                <form method="POST" action="{{ route('posts.favorites.store', $post->id) }}">
+                                    @csrf
+                                    <button type="submit">
+                                        <i class="bi bi-heart"></i>
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
+                    @endauth
+
                     @can('update', $post)
                     <a class="btn btn-primary me-3" href="{{ route('posts.edit',  $post->id) }}"> Edit </a>
                     @endcan

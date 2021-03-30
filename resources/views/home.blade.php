@@ -14,10 +14,33 @@
                     <div class="col-12 mb-3">
                         <div class="card">
                             <div class="card-body">
-                                <a href="{{ route('posts.show', $post->id)  }} ">
+                                <a href="{{ route('posts.show', $post->id)  }}">
                                     <div class="card-title">{{ $post->title }}</div>
-                                    <p> Posted on {{ $post->created_at->diffForHumans() }}</p>
+                                    <p class="text-muted"> Posted on {{ $post->created_at->diffForHumans() }}</p>
                                 </a>
+
+
+                                <p> Posted by <strong>{{ $post->user->name }}</strong></p>
+                                @auth
+                                    <div class="me-3">
+                                        @if($post->favoritedBy(auth()->user()))
+                                            <form method="POST" action="{{ route('posts.favorites.destroy', $post->id) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit">
+                                                    <i class="bi bi-heart-fill"></i>
+                                                </button>
+                                            </form>
+                                        @else
+                                            <form method="POST" action="{{ route('posts.favorites.store', $post->id) }}">
+                                                @csrf
+                                                <button type="submit">
+                                                    <i class="bi bi-heart"></i>
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                @endauth
                             </div>
                         </div>
                     </div>
