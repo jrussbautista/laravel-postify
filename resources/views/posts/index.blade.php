@@ -8,7 +8,7 @@
     <h1> List of Posts </h1>
     <div class="row">
         @foreach($posts as $post)
-            <div class="col-xs-12 col-lg-3 mb-3">
+            <div class="col-12 mb-3">
                 <div class="card">
                     <div class="card-body">
                         <a href="{{ route('posts.show', $post->id)  }} ">
