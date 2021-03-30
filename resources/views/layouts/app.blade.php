@@ -29,10 +29,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav ms-auto align-items-center mb-2 mb-lg-0">
-                    <li class="nav-item mr-2">
-                        <a class="nav-item" href="{{ route('posts.create') }}" > Create Post </a>
-                    </li>
                     @auth
+                        <li class="nav-item mr-2">
+                            <a class="nav-item" href="{{ route('posts.create') }}" > Create Post </a>
+                        </li>
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
