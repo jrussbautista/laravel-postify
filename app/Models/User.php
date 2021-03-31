@@ -20,6 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id'
     ];
 
     /**
@@ -48,4 +49,23 @@ class User extends Authenticatable
     public function favorites() {
         return $this->hasMany(Favorite::class);
     }
+
+    public function getIsAdminAttribute() {
+        return $this->role_id === 2;
+    }
+
+    public function role() {
+        $role = "";
+        switch ($this->role_id) {
+            case 1:
+                $role = 'user';
+                break;
+            case 2:
+                $role = 'admin';
+                break;
+        }
+        return $role;
+    }
+
+
 }

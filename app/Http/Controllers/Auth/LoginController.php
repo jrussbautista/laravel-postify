@@ -13,6 +13,7 @@ class LoginController extends Controller
 
     public function store(Request $request) {
 
+
        $credentials = $request->only('email', 'password');
 
         $request->validate([
@@ -20,9 +21,16 @@ class LoginController extends Controller
             'password' => 'required|min:6',
         ]);
 
-        if(auth()->attempt($credentials)) {
+        if(auth()->attempt($credentials , $request->remember)) {
             $request->session()->regenerate();
-            return redirect()->intended('dashboard');
+
+            if(auth()->user()->is_admin) {
+                return redirect()->intended('admin/dashboard');
+            }else {
+                return redirect()->intended('dashboard');
+            }
+
+
         }
 
         return back()->withErrors([

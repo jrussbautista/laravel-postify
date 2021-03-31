@@ -22,21 +22,21 @@ class PostPolicy
     }
 
     public function view(User $user, Post $post) {
-        return $user->id === $post->user_id
+        return $user->id === $post->user_id || $user->is_admin
             ?
             Response::allow() :
             Response::deny('You do not own this post');
     }
 
     public function delete(User $user, Post $post) {
-        return $user->id === $post->user_id
+        return $user->id === $post->user_id || $user->is_admin
             ?
             Response::allow() :
             Response::deny('You do not own this post');
     }
 
     public function update(User $user, Post $post) {
-        return $user->id === $post->user_id
+        return $user->id === $post->user_id || $user->is_admin
             ?
             Response::allow() :
             Response::deny('You do not own this post');
