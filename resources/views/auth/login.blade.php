@@ -41,6 +41,10 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        <div class="mt-3">
+            <a class="btn btn-primary" href="{{ route('social.auth.redirect', 'google') }}"> Log in with google </a>
+            <a class="btn btn-primary" href="{{ route('social.auth.redirect', 'facebook') }}"> Log in with facebook </a>
+        </div>
     </div>
 
 @endsection

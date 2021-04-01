@@ -8,6 +8,8 @@ use \App\Http\Controllers\DashboardController;
 use \App\Http\Controllers\Auth\LogoutController;
 use \App\Http\Controllers\HomeController;
 use \App\Http\Controllers\FavoriteController;
+use Laravel\Socialite\Facades\Socialite;
+use \App\Http\Controllers\Auth\SocialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +21,12 @@ use \App\Http\Controllers\FavoriteController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
+
+Route::get('/auth/{provider}', [SocialController::class, 'redirect'])->name('social.auth.redirect');
+Route::get('/auth/{provider}/callback', [SocialController::class, 'callback'])->name('social.auth.callback');
+
 
 
 Route::group(['middleware' => 'auth'], function () {
