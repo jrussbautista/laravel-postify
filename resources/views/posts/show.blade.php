@@ -19,7 +19,8 @@
         @endif
 
 
-        <div class="card">
+
+        <div class="card mb-2">
             <div class="card-body">
                 <h1>{{ $post->title }}</h1>
                 <p>
@@ -69,6 +70,54 @@
                 </div>
             </div>
         </div>
+
+        <div class="card mb-2">
+            <div class="card-body">
+                <form action="{{ route('posts.comments.store', $post) }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="body" id="body" class="mb-1"> Comment: </label>
+                        <textarea name="body" id="" cols="5" rows="5" class="form-control @error('body') is-invalid @enderror"></textarea>
+                        @error('body')
+                        <div class="invalid-feedback mt-2">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary"> Submit </button>
+                    </div>
+                </form>
+                @foreach($post->comments as $comment)
+                    <div class="mb-3">
+                        <p>{{ $comment->body }}</p>
+                        <p>By {{ $comment->user->name }}</p>
+                        <p>{{ $comment->created_at->diffForHumans() }}</p>
+
+                        @auth
+
+                        <div class="d-flex align-items-center" >
+
+                            @can('delete', $comment)
+                                <form class="mb-0" action="{{ route('posts.comments.destroy', ['post' => $post, 'comment' => $comment]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger"> Delete </button>
+                                </form>
+                            @endcan
+                        </div>
+                        @endauth
+                        <hr />
+                    </div>
+
+                @endforeach
+            </div>
+
+
+        </div>
+
+        <div class="mt-3">
+            {{ $post->comments->links() }}
+        </div>
+
     </div>
 
 @endsection

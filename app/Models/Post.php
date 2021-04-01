@@ -26,4 +26,8 @@ class Post extends Model
     public function favoritedBy(User $user){
        return $this->favorites->contains('user_id', $user->id);
     }
+
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
 }

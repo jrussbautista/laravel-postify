@@ -10,12 +10,20 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth')->except(['show', 'index']);
+    }
+
     public function index() {
         $posts = Post::latest()->with(['favorites',  'user'])->orderBy('created_at', 'desc')->paginate(10);
         return  view('posts.index', ['posts' => $posts ]);
     }
 
     public function show(Post $post) {
+        $comments = $post->comments()->with(['user'])->paginate(10);
+        $post['comments'] = $comments;
+
         return view('posts.show', ['post' => $post]);
     }
 
@@ -32,6 +40,7 @@ class PostController extends Controller
     }
 
     public function edit(Post $post) {
+        $this->authorize('update', $post);
         $categories = Category::all();
         return view('posts.edit', [
             'post' => $post,
