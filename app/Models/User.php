@@ -6,10 +6,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -61,7 +62,7 @@ class User extends Authenticatable
         return $this->role_id === 2;
     }
 
-    public function role() {
+    public function getRoleAttribute() {
         $role = "";
         switch ($this->role_id) {
             case 1:
@@ -73,6 +74,5 @@ class User extends Authenticatable
         }
         return $role;
     }
-
 
 }

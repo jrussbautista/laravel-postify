@@ -19,12 +19,21 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
+
     public function favorites() {
         return $this->hasMany(Favorite::class);
     }
 
+    public function getFavoritedAttribute() {
+        return $this->favorites->contains('user_id', auth()->id());
+    }
+
     public function favoritedBy(User $user){
        return $this->favorites->contains('user_id', $user->id);
+    }
+
+    public function latestComments() {
+        return $this->comments()->latest()->limit(5);
     }
 
     public function comments() {

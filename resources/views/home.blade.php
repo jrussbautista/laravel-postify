@@ -8,6 +8,7 @@
         <div>
             <h2> Recent Posts </h2>
 
+
             @if($latestPosts->count() > 0)
             <div class="row">
                 @foreach($latestPosts as $post)

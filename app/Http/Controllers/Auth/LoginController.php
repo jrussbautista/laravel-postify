@@ -30,7 +30,6 @@ class LoginController extends Controller
                 return redirect()->intended('dashboard');
             }
 
-
         }
 
         return back()->withErrors([

@@ -37,7 +37,7 @@
                 <div class="d-flex align-items-center">
                     @auth
                         <div class="me-3">
-                            @if($post->favoritedBy(auth()->user()))
+                            @if($post->favorited)
                                 <form method="POST" action="{{ route('posts.favorites.destroy', $post->id) }}">
                                     @csrf
                                     @method('DELETE')
